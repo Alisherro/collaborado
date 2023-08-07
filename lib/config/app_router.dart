@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import '../domain/usecase/advice_use_case.dart';
+import '../presentation/screen/home_screen.dart';
 import '../presentation/screen/login_screen.dart';
 import '../presentation/screen/registration_screen.dart';
+import 'package:provider/provider.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -42,6 +44,16 @@ class AppRouter {
           context: context,
           state: state,
           child: const RegistrationScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/home',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+          context: context,
+          state: state,
+          child: HomeScreen(
+            useCase: Provider.of<GetRandomAdviceUseCase>(context),
+          ),
         ),
       ),
     ],

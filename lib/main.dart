@@ -1,5 +1,7 @@
+import 'package:collaborado/config/app_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'config/app_router.dart';
 import 'config/app_theme.dart';
@@ -18,12 +20,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: AppRouter.router,
-      theme: AppTheme.themeData,
-      title: 'Flutter App',
-      // theme: AppTheme.themeData,
+    return MultiProvider(
+      providers: [
+        Provider.value(
+          value: AppDependencies.provideGetAdviceByIdUseCase(),
+        ),
+        Provider.value(
+          value: AppDependencies.provideGetRandomAdviceUseCase(),
+        ),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: AppRouter.router,
+        theme: AppTheme.themeData,
+        title: 'Flutter App',
+        // theme: AppTheme.themeData,
+      ),
     );
   }
 }
