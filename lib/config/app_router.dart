@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../domain/usecase/advice_use_case.dart';
+import '../presentation/logic/advice_cubit/advice_cubit.dart';
 import '../presentation/screen/home_screen.dart';
 import '../presentation/screen/login_screen.dart';
 import '../presentation/screen/registration_screen.dart';
@@ -51,8 +53,9 @@ class AppRouter {
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,
           state: state,
-          child: HomeScreen(
-            useCase: Provider.of<GetRandomAdviceUseCase>(context),
+          child: BlocProvider(
+            create: (c) => AdviceCubit(context.read<GetRandomAdviceUseCase>()),
+            child: const HomeScreen(),
           ),
         ),
       ),
